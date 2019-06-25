@@ -15,10 +15,10 @@ public class Menu : MonoBehaviour
     // We don't have an options menu yet... So just throw that button somewhere random
     public void OnOptionsPressed()
     {
-        int left = Random.Range(-1, 2);
-        int up = Random.Range(-1, 2);
+        float rWidth = Random.Range(0f, Screen.width);
+        float rHeight = Random.Range(0f, Screen.height);
 
-        OptionsButton.transform.position = new Vector3(Random.Range(0f, Screen.width), Random.Range(0f, Screen.height), Camera.main.nearClipPlane + 15f);
+        OptionsButton.transform.position = new Vector3(rWidth, rHeight, Camera.main.nearClipPlane);
     }
 
     // Exit the game
