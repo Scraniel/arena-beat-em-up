@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -7,25 +6,43 @@ public class Player : MonoBehaviour
     
     public float Speed = 0.01f;
 
+    public GameObject EquippedWeapon;
     private Animator _animator;
+
+    private IWeapon _weapon;
+
+    
 
     // Start is called before the first frame update
     void Start()
     {
         _animator = GetComponent<Animator>();
         _animator.speed = 0.1f;
+        SwitchWeapon(EquippedWeapon);
     }
 
     // Update is called once per frame
     void Update()
     {
-        Vector2 direction = GetMovementDirection();
-        transform.position += direction.ToVector3() * Speed;
+        Vector2 movementDirection = GetMovementDirection();
+        transform.position += movementDirection.ToVector3() * Speed;
+        var characterOrientation = GetCharacterOrientation();
+        UpdateAnimation(characterOrientation);
 
-        UpdateAnimation();
-        
         //Stop animation if player is not moving
-        _animator.speed = direction == Vector2.zero ? 0 : 0.1f;
+        _animator.speed = movementDirection == Vector2.zero ? 0 : 0.1f;
+
+        int leftClickMouseButton = 0;
+        if (Input.GetMouseButtonDown(leftClickMouseButton))
+        {
+            _weapon.Attack(characterOrientation);
+        }
+    }
+
+    public void SwitchWeapon(GameObject weapon)
+    {
+        _weapon = weapon.GetComponent<IWeapon>();
+        _weapon.Bind(gameObject);
     }
 
     private Vector2 GetMovementDirection() {
@@ -39,13 +56,24 @@ public class Player : MonoBehaviour
         return direction;
     }
 
-    private void UpdateAnimation()
+    private Vector2 GetCharacterOrientation()
     {
-        foreach (KeyCode key in _keyCodeAnimationMap.Keys)
-        {
-            if (Input.GetKeyDown(key))
-                _animator.Play(_keyCodeAnimationMap[key]);
-        }
+        var mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        var charPosition = this.transform.position;
+        var dirVec = mousePosition - charPosition;
+        return (mousePosition - charPosition).ToVector2().normalized;
+    }
+
+    private void UpdateAnimation(Vector2 characterOrientation)
+    {
+        if (characterOrientation.x <= -0.7f)
+            _animator.Play("player-walking-left");
+        else if (characterOrientation.x >= 0.7f)
+            _animator.Play("player-walking-right");
+        else if (characterOrientation.y >= 0.7f)
+            _animator.Play("player-walking-up");
+        else if (characterOrientation.y <= 0.7f)
+            _animator.Play("player-walking-down");
     }
 
     private Dictionary<KeyCode, Vector2> _keyCodeDirectionMap = new Dictionary<KeyCode, Vector2>
@@ -55,12 +83,11 @@ public class Player : MonoBehaviour
         {KeyCode.S, new Vector2(0, -1) },
         {KeyCode.D, new Vector2(1, 0) }
     };
-
-    private Dictionary<KeyCode, string> _keyCodeAnimationMap = new Dictionary<KeyCode, string>
-    {
-        {KeyCode.W, "player-walking-up" },
-        {KeyCode.A, "player-walking-left"},
-        {KeyCode.S, "player-walking-down"},
-        {KeyCode.D, "player-walking-right"}
-    };
 }
+
+
+//whatever direction char is looking, make it look that way
+
+//Get mouse/char direction vector
+//From vector, get deg
+//
