@@ -45,6 +45,16 @@ public class Player : MonoBehaviour
         _weapon.Bind(gameObject);
     }
 
+    public void OnTriggerEnter2D(Collider2D collision)
+    {
+        IEnemy collidedEnemy = collision.gameObject.GetComponent<IEnemy>();
+
+        if (collidedEnemy == null)
+            return;
+
+        Debug.Log("Bat Attacked Player!");
+    }
+
     private Vector2 GetMovementDirection() {
 
         Vector2 direction = Vector2.zero;
