@@ -8,6 +8,7 @@ public class Player : MonoBehaviour
 
     public GameObject EquippedWeapon;
     private Animator _animator;
+    private Rigidbody2D _body;
 
     private IWeapon _weapon;
 
@@ -18,6 +19,7 @@ public class Player : MonoBehaviour
     {
         _animator = GetComponent<Animator>();
         _animator.speed = 0.1f;
+        _body = GetComponent<Rigidbody2D>();
         SwitchWeapon(EquippedWeapon);
     }
 
@@ -25,7 +27,7 @@ public class Player : MonoBehaviour
     void Update()
     {
         Vector2 movementDirection = GetMovementDirection();
-        transform.position += movementDirection.ToVector3() * Speed;
+        _body.MovePosition(transform.position + movementDirection.ToVector3() * Speed);
         var characterOrientation = GetCharacterOrientation();
         UpdateAnimation(characterOrientation);
 
