@@ -98,7 +98,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b122f38f7a174df448fcd954de781ced, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Speed: 0.01
+  Speed: 0.1
   EquippedWeapon: {fileID: 8929677039167919885, guid: 8880abf44235a08469c2fb56fc21d0e9,
     type: 3}
 --- !u!95 &3533072698239427512
@@ -136,7 +136,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0
   m_GravityScale: 0
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: be7567bc63f2d904386f741675614413, type: 2}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
