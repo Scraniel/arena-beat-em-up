@@ -26,7 +26,7 @@ public class DebugSquareProjectile : MonoBehaviour
 
         if (enemyHit != null)
         {
-            enemyHit.Hit(1);
+            enemyHit.TakeDamage(1);
         }
     }
 }

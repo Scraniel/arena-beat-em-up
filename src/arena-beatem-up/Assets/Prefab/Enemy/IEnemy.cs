@@ -2,5 +2,5 @@
 {
     int Life { get; }
 
-    void Hit(int damageAmount);
+    void TakeDamage(int damageAmount);
 }

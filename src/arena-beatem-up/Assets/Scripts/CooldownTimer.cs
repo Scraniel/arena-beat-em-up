@@ -39,7 +39,7 @@ public class CooldownTimer
     /// The time limit of the cooldown timer. 
     /// This timer will be marked as finished once the hits this mark.
     /// </summary>
-    /// <param name="timeLimit">The allocated time limit.</param>
+    /// <param name="timeLimit">The allocated time limit in seconds.</param>
     /// <param name="reset">Whether the timer should be reseted.</param>
     public void SetTimeLimit(float timeLimit, bool reset = true)
     {
