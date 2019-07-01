@@ -28,15 +28,19 @@ public class Bat : MonoBehaviour, IEnemy
         
     }
 
-    public void Hit(int damageAmount)
+    public void TakeDamage(int damageAmount)
     {
         Life -= damageAmount;
 
         if (Life <= 0)
-        {
-            Debug.Log("Bat died!");
-            Destroy(gameObject);
-        }
+            Kill();
+    }
+
+    public void Kill()
+    {
+        Debug.Log("Bat died!");
+        Score.Instance.AddScore(1);
+        Destroy(gameObject);
     }
 
     private void ChangeDirection() {
